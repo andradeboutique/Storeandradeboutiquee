@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrade Boutique — Catálogo Exclusivo</title>
+  <style>
+    :root {
+      --bg: #faf8f3;
+      --surface: #ffffff;
+      --surface-soft: #f3efe6;
+      --ink: #25231e;
+      --muted: #6e685d;
+      --gold: #a88d53;
+      --gold-dark: #876d37;
+      --border: #e5dfd3;
+      --danger: #a63a3a;
+      --shadow: 0 10px 30px rgba(37, 35, 30, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* Abertura animada */
+    #brandIntro {
+      position: fixed;
+      inset: 0;
+      background: #1b1915;
+      color: #faf8f3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      text-align: center;
+      padding: 24px;
+    }
+
+    #brandIntro.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #brandIntro .emblem {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      letter-spacing: 0.14em;
+      color: #d7be84;
+      margin-bottom: 8px;
+      animation: fadeScale 1.2s ease both;
+    }
+
+    #brandIntro .sub {
+      font-size: 0.95rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #d8d2c5;
+      opacity: 0.9;
+    }
+
+    @keyframes fadeScale {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #brandIntro,
+      #brandIntro .emblem {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Cabeçalho */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .brand span {
+      color: var(--gold-dark);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-pill {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      border-color: var(--gold);
+      background: var(--surface-soft);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    .btn-primary:hover {
+      background: #3a3730;
+      border-color: #3a3730;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-dark);
+      border-color: var(--gold-dark);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: #e3bcbc;
+    }
+
+    .btn-danger:hover {
+      background: #fdf2f2;
+    }
+
+    /* Conteúdo principal */
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 100px;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* Controles de busca e filtro */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 26px;
+      background: var(--surface);
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .search-box {
+      flex: 1 1 240px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    /* Grade de produtos */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 14px rgba(37, 35, 30, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-media {
+      height: 220px;
+      background: #f3ede0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 8px;
+    }
+
+    .category-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold-dark);
+      font-weight: 700;
+    }
+
+    .card-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+    }
+
+    /* Botão flutuante da sacola */
+    #cartBtn {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 60;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    #cartCount {
+      background: var(--gold);
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    /* Modais */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 23, 19, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius);
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px 8px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 18px 0;
+    }
+
+    /* Admin */
+    .notice {
+      background: #f9f4e8;
+      border: 1px solid #e6d7b2;
+      color: #5c491e;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .photo-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .photo-preview {
+      width: 92px;
+      height: 92px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #f3ede0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-controls {
+      flex: 1 1 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .admin-section {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin-section h3 {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .admin-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .admin-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    .admin-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: #f3ede0;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Abertura -->
+  <div id="brandIntro" aria-hidden="true">
+    <div class="emblem">ANDRADE</div>
+    <div class="sub">Boutique &amp; Acessórios</div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="brand">ANDRADE <span>BOUTIQUE</span></a>
+      <div class="header-actions">
+        <span class="status-pill" id="syncStatus">Modo local</span>
+        <button type="button" class="btn" id="openAdminBtn">Área Admin</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Principal -->
+  <main>
+    <section class="hero">
+      <h1>Peças selecionadas com elegância e delicadeza</h1>
+      <p>Explore o catálogo, monte sua sacola e finalize o seu pedido diretamente pelo WhatsApp.</p>
+    </section>
+
+    <section class="toolbar" aria-label="Filtros e busca">
+      <div class="search-box">
+        <input type="search" id="searchInput" placeholder="Buscar por nome ou descrição..." />
+      </div>
+      <div class="filters" id="filters"></div>
+    </section>
+
+    <section class="products-grid" id="products" aria-live="polite"></section>
+  </main>
+
+  <!-- Botão flutuante da sacola -->
+  <button type="button" id="cartBtn" aria-label="Abrir sacola de compras">
+    <span>Sacola</span>
+    <span id="cartCount">0</span>
+  </button>
+
+  <!-- Modal da Sacola -->
+  <div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="cartTitle">Seu Pedido</h2>
+        <button type="button" class="close-btn" id="closeCartBtn" aria-label="Fechar">&times;</button>
+      </div>
+      <div id="cartItems"></div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">R$ 0,00</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="btn" id="clearCartBtn">Limpar sacola</button>
+        <a id="whatsappCheckoutBtn" class="btn btn-gold" target="_blank" rel="noopener noreferrer">
+          Enviar pedido no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Administrativo -->
+  <div class="overlay" id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="adminTitle">Painel Administrativo</h2>
+        <button type="button" class="close-btn" id="closeAdminBtn" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div id="adminLoginBox">
+        <div class="notice">
+          <strong>Integração Supabase:</strong> produtos e categorias são sincronizados na nuvem para todos os clientes.
+        </div>
+        <form id="adminLoginForm" class="form-grid">
+          <div class="field">
+            <label for="adminPassInput">Senha de acesso</label>
+            <input type="password" id="adminPassInput" placeholder="Digite a senha" required />
+          </div>
+          <div class="field" style="justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="adminPanelContent" style="display: none;">
+        <form id="productForm">
+          <input type="hidden" id="editingProductId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="prodName">Nome do produto</label>
+              <input type="text" id="prodName" required placeholder="Ex.: Laço Cereja Bordô" />
+            </div>
+            <div class="field">
+              <label for="prodPrice">Preço (R$)</label>
+              <input type="number" id="prodPrice" step="0.01" min="0" required placeholder="49.90" />
+            </div>
+            <div class="field">
+              <label for="prodCategory">Categoria</label>
+              <select id="prodCategory" required></select>
+            </div>
+          </div>
+
+          <!-- Adicionar / Trocar foto do produto -->
+          <div class="photo-box">
+            <div class="photo-preview" id="prodPhotoPreview"></div>
+            <div class="photo-controls">
+              <label for="prodPhotoFile" style="font-size: 0.84rem; font-weight: 700; color: var(--ink);">
+                Foto do produto (galeria, câmera ou link)
+              </label>
+              <input type="file" id="prodPhotoFile" accept="image/*" />
+              <input type="url" id="prodPhotoUrl" placeholder="Ou cole um link de imagem (https://...)" />
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn" id="clearPhotoBtn" style="padding: 6px 12px; font-size: 0.82rem;">
+                  Remover foto
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom: 14px;">
+            <label for="prodDesc">Descrição</label>
+            <textarea id="prodDesc" rows="2" placeholder="Detalhes do material, tamanho ou acabamento"></textarea>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary" id="saveProductBtn">Salvar produto</button>
+            <button type="button" class="btn" id="cancelEditBtn" style="display: none;">Cancelar edição</button>
+          </div>
+        </form>
+
+        <div class="admin-section">
+          <h3>Categorias</h3>
+          <form id="categoryForm" class="form-grid" style="margin-bottom: 10px;">
+            <div class="field">
+              <label for="newCategoryInput">Nova categoria</label>
+              <input type="text" id="newCategoryInput" placeholder="Ex.: Presilhas" required />
+            </div>
+            <div class="field" style="justify-content: flex-end;">
+              <button type="submit" class="btn">Adicionar categoria</button>
+            </div>
+          </form>
+          <div class="admin-list" id="adminCategoriesList"></div>
+        </div>
+
+        <div class="admin-section">
+          <h3>Produtos cadastrados</h3>
+          <div class="admin-list" id="adminProductsList"></div>
+        </div>
+
+        <div class="admin-section" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <button type="button" class="btn btn-danger" id="resetDemoDataBtn">Restaurar catálogo padrão</button>
+          <button type="button" class="btn" id="logoutAdminBtn">Sair do painel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Configuração WhatsApp, Supabase e dados iniciais -->
+  <script>
+    const WHATSAPP_PHONE = "5584921864568";
+
+    const SUPABASE_URL = "https://lhtgfbpbyqpacrqjpame.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_ngJOt1NR83Sw8ClN8MgZTw_PfK1WbBs";
+
+    const STORAGE_KEYS = {
+      products: "andrade_boutique_products_sb_v1",
+      categories: "andrade_boutique_categories_sb_v1",
+      cart: "andrade_boutique_cart_sb_v1"
+    };
+
+    function createPlaceholderSvg(label, accent = "#876d37", bg = "#f3ede0") {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
+        <rect width="600" height="450" fill="${bg}"/>
+        <circle cx="300" cy="185" r="78" fill="none" stroke="${accent}" stroke-width="3" opacity="0.45"/>
+        <path d="M245 215 Q300 135 355 215 Q300 245 245 215 Z" fill="${accent}" opacity="0.22"/>
+        <text x="300" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="${accent}">${label}</text>
+        <text x="300" y="338" text-anchor="middle" font-family="sans-serif" font-size="13" letter-spacing="3" fill="#6e685d">ANDRADE BOUTIQUE</text>
+      </svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    const FALLBACK_IMAGE = createPlaceholderSvg("Peça Exclusiva", "#876d37", "#f3ede0");
+
+    const DEFAULT_CATEGORIES = ["Laços", "Faixas", "Conjuntos"];
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "laco_cereja_bordo",
+        name: "Laço Cereja Bordô",
+        price: 39.9,
+        category: "Laços",
+        description: "Acabamento artesanal em fita de gorgurão bordô com presilha antideslizante.",
+        image: createPlaceholderSvg("Laço Cereja Bordô", "#7a2636", "#f7ecee")
+      },
+      {
+        id: "faixa_perola_ouro",
+        name: "Faixa Pérola Ouro",
+        price: 44.0,
+        category: "Faixas",
+        description: "Faixa macia e confortável com aplicação delicada em tons perolados e dourados.",
+        image: createPlaceholderSvg("Faixa Pérola Ouro", "#876d37", "#f8f3e6")
+      },
+      {
+        id: "conjunto_cetim_areia",
+        name: "Conjunto Cetim Areia",
+        price: 68.5,
+        category: "Conjuntos",
+        description: "Kit coordenado em cetim areia para ocasiões especiais e ensaios fotográficos.",
+        image: createPlaceholderSvg("Conjunto Cetim Areia", "#6e5c45", "#f3efe6")
+      }
+    ];
+  </script>
+
+  <!-- Lógica principal da loja + Supabase REST -->
+  <script>
+    (function () {
+      const introEl = document.getElementById("brandIntro");
+      const syncStatusEl = document.getElementById("syncStatus");
+      const productsEl = document.getElementById("products");
+      const filtersEl = document.getElementById("filters");
+      const searchInput = document.getElementById("searchInput");
+
+      const cartBtn = document.getElementById("cartBtn");
+      const cartCountEl = document.getElementById("cartCount");
+      const cartOverlay = document.getElementById("cartOverlay");
+      const closeCartBtn = document.getElementById("closeCartBtn");
+      const cartItemsEl = document.getElementById("cartItems");
+      const cartTotalEl = document.getElementById("cartTotal");
+      const clearCartBtn = document.getElementById("clearCartBtn");
+      const whatsappCheckoutBtn = document.getElementById("whatsappCheckoutBtn");
+
+      const openAdminBtn = document.getElementById("openAdminBtn");
+      const adminOverlay = document.getElementById("adminOverlay");
+      const closeAdminBtn = document.getElementById("closeAdminBtn");
+      const adminLoginBox = document.getElementById("adminLoginBox");
+      const adminPanelContent = document.getElementById("adminPanelContent");
+      const adminLoginForm = document.getElementById("adminLoginForm");
+      const adminPassInput = document.getElementById("adminPassInput");
+      const logoutAdminBtn = document.getElementById("logoutAdminBtn");
+
+      const productForm = document.getElementById("productForm");
+      const editingProductIdInput = document.getElementById("editingProductId");
+      const prodNameInput = document.getElementById("prodName");
+      const prodPriceInput = document.getElementById("prodPrice");
+      const prodCategorySelect = document.getElementById("prodCategory");
+      const prodPhotoFileInput = document.getElementById("prodPhotoFile");
+      const prodPhotoUrlInput = document.getElementById("prodPhotoUrl");
+      const prodPhotoPreview = document.getElementById("prodPhotoPreview");
+      const clearPhotoBtn = document.getElementById("clearPhotoBtn");
+      const prodDescInput = document.getElementById("prodDesc");
+      const saveProductBtn = document.getElementById("saveProductBtn");
+      const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+      const categoryForm = document.getElementById("categoryForm");
+      const newCategoryInput = document.getElementById("newCategoryInput");
+      const adminCategoriesList = document.getElementById("adminCategoriesList");
+      const adminProductsList = document.getElementById("adminProductsList");
+      const resetDemoDataBtn = document.getElementById("resetDemoDataBtn");
+
+      let activeCategory = "Todas";
+      let searchQuery = "";
+      let isAdminAuthenticated = false;
+      let currentPhotoData = FALLBACK_IMAGE;
+
+      const hasSupabaseConfig =
+        typeof SUPABASE_URL === "string" &&
+        typeof SUPABASE_ANON_KEY === "string" &&
+        SUPABASE_URL.startsWith("https://") &&
+        SUPABASE_ANON_KEY.trim().length > 0 &&
+        !SUPABASE_URL.includes("COLE_AQUI") &&
+        !SUPABASE_ANON_KEY.includes("COLE_AQUI");
+
+      function setSyncLabel(text) {
+        if (syncStatusEl) syncStatusEl.textContent = text;
+      }
+
+      function hideIntro() {
+        introEl.classList.add("hidden");
+      }
+      const introTimer = setTimeout(hideIntro, 2000);
+      const safetyTimer = setTimeout(hideIntro, 6500);
+      introEl.addEventListener("click", () => {
+        clearTimeout(introTimer);
+        clearTimeout(safetyTimer);
+        hideIntro();
+      });
+
+      function loadJson(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : structuredClone(fallback);
+        } catch {
+          return structuredClone(fallback);
+        }
+      }
+
+      function saveJson(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch {
+          alert("Espaço de armazenamento do navegador cheio. Tente usar uma foto menor ou um link de imagem.");
+          return false;
+        }
+      }
+
+      let categories = loadJson(STORAGE_KEYS.categories, DEFAULT_CATEGORIES);
+      let products = loadJson(STORAGE_KEYS.products, DEFAULT_PRODUCTS);
+      let cart = loadJson(STORAGE_KEYS.cart, {});
+
+      async function sbRequest(path, options = {}) {
+        const url = `${SUPABASE_URL.replace(/\/+$/, "")}/rest/v1/${path}`;
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            "Content-Type": "application/json",
+            Prefer: options.prefer || "return=representation",
+            ...(options.headers || {})
+          }
+        });
+        if (!res.ok) {
+          const detail = await res.text();
+          throw new Error(detail || `Erro HTTP ${res.status}`);
+        }
+        if (res.status === 204) return null;
+        const text = await res.text();
+        return text ? JSON.parse(text) : null;
+      }
+
+      async function syncFromSupabase() {
+        if (!hasSupabaseConfig) {
+          setSyncLabel("Modo local");
+          return;
+        }
+        setSyncLabel("Sincronizando...");
+        try {
+          const [sbCats, sbProds] = await Promise.all([
+            sbRequest("categories?select=name&order=id.asc", { method: "GET" }),
+            sbRequest("products?select=*&order=name.asc", { method: "GET" })
+          ]);
+
+          if (Array.isArray(sbCats) && sbCats.length > 0) {
+            categories = sbCats.map((c) => c.name);
+            saveJson(STORAGE_KEYS.categories, categories);
+          }
+
+          if (Array.isArray(sbProds)) {
+            products = sbProds.map((p) => ({
+              id: String(p.id),
+              name: p.name,
+              price: Number(p.price || 0),
+              category: p.category,
+              description: p.description || "",
+              image: p.image || FALLBACK_IMAGE
+            }));
+            saveJson(STORAGE_KEYS.products, products);
+          }
+
+          setSyncLabel("Nuvem ativa");
+          renderFilters();
+          renderProducts();
+          if (isAdminAuthenticated) {
+            populateCategorySelect();
+            renderAdminCategories();
+            renderAdminProducts();
+          }
+        } catch (err) {
+          console.error(err);
+          setSyncLabel("Erro nuvem");
+        }
+      }
+
+      async function upsertProductCloud(product) {
+        saveJson(STORAGE_KEYS.products, products);
+        if (!hasSupabaseConfig) return;
+        setSyncLabel("Salvando...");
+        try {
+          await sbRequest("products?on_conflict=id", {
+            method: "POST",
+            body: JSON.stringify([product])
+          });
+          setSyncLabel("Nuvem ativa");
+        } catch (err) {
+          console.error(err);
+          setSyncLabel("Erro nuvem");
+          alert("Salvo no navegador, mas falhou ao enviar ao Supabase: " + err.message);
+        }
+      }
+
+      async function deleteProductCloud(productId) {
+        saveJson(STORAGE_KEYS.products, products);
+        if (!hasSupabaseConfig) return;
+        setSyncLabel("Excluindo...");
+        try {
+          await sbRequest(`products?id=eq.${encodeURIComponent(productId)}`, {
+            method: "DELETE",
+            prefer: "return=minimal"
+          });
+          setSyncLabel("Nuvem ativa");
+        } catch (err) {
+          console.error(err);
+          setSyncLabel("Erro nuvem");
+          alert("Removido localmente, mas falhou no Supabase: " + err.message);
+        }
+      }
+
+      async function addCategoryCloud(catName) {
+        saveJson(STORAGE_KEYS.categories, categories);
+        if (!hasSupabaseConfig) return;
+        setSyncLabel("Salvando...");
+        try {
+          await sbRequest("categories?on_conflict=name", {
+            method: "POST",
+            prefer: "resolution=ignore-duplicates,return=representation",
+            body: JSON.stringify([{ name: catName }])
+          });
+          setSyncLabel("Nuvem ativa");
+        } catch (err) {
+          console.error(err);
+          setSyncLabel("Erro nuvem");
+          alert("Categoria salva localmente, mas falhou no Supabase: " + err.message);
+        }
+      }
+
+      async function deleteCategoryCloud(catName) {
+        saveJson(STORAGE_KEYS.categories, categories);
+        if (!hasSupabaseConfig) return;
+        setSyncLabel("Excluindo...");
+        try {
+          await sbRequest(`categories?name=eq.${encodeURIComponent(catName)}`, {
+            method: "DELETE",
+            prefer: "return=minimal"
+          });
+          setSyncLabel("Nuvem ativa");
+        } catch (err) {
+          console.error(err);
+          setSyncLabel("Erro nuvem");
+          alert("Categoria removida localmente, mas falhou no Supabase: " + err.message);
+        }
+      }
+
+      function formatBRL(value) {
+        return Number(value || 0).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        });
+      }
+
+      function slugify(text) {
+        return String(text || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "_")
+          .replace(/^_+|_+$/g, "");
+      }
+
+      function setPhotoPreview(src) {
+        const finalSrc = src && src.trim() ? src.trim() : FALLBACK_IMAGE;
+        currentPhotoData = finalSrc;
+        prodPhotoPreview.innerHTML = `<img src="${finalSrc}" alt="Pré-visualização do produto" />`;
+        const img = prodPhotoPreview.querySelector("img");
+        img.onerror = () => {
+          img.src = FALLBACK_IMAGE;
+        };
+      }
+
+      function compressImageFile(file, maxSize = 720, quality = 0.72) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+              let { width, height } = img;
+              if (width > maxSize || height > maxSize) {
+                if (width > height) {
+                  height = Math.round((height * maxSize) / width);
+                  width = maxSize;
+                } else {
+                  width = Math.round((width * maxSize) / height);
+                  height = maxSize;
+                }
+              }
+              const canvas = document.createElement("canvas");
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, width, height);
+              resolve(canvas.toDataURL("image/jpeg", quality));
+            };
+            img.onerror = reject;
+            img.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      prodPhotoFileInput.addEventListener("change", async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        try {
+          const compressed = await compressImageFile(file);
+          prodPhotoUrlInput.value = "";
+          setPhotoPreview(compressed);
+        } catch {
+          alert("Não foi possível carregar essa imagem.");
+        }
+      });
+
+      prodPhotoUrlInput.addEventListener("input", (e) => {
+        const url = e.target.value.trim();
+        if (url) {
+          prodPhotoFileInput.value = "";
+          setPhotoPreview(url);
+        } else {
+          setPhotoPreview(FALLBACK_IMAGE);
+        }
+      });
+
+      clearPhotoBtn.addEventListener("click", () => {
+        prodPhotoFileInput.value = "";
+        prodPhotoUrlInput.value = "";
+        setPhotoPreview(FALLBACK_IMAGE);
+      });
+
+      function renderFilters() {
+        const allCats = ["Todas", ...categories];
+        if (!allCats.includes(activeCategory)) {
+          activeCategory = "Todas";
+        }
+
+        filtersEl.innerHTML = "";
+        allCats.forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = `filter-btn ${cat === activeCategory ? "active" : ""}`;
+          btn.textContent = cat;
+          btn.addEventListener("click", () => {
+            activeCategory = cat;
+            renderFilters();
+            renderProducts();
+          });
+          filtersEl.appendChild(btn);
+        });
+      }
+
+      function renderProducts() {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = products.filter((item) => {
+          const matchesCat = activeCategory === "Todas" || item.category === activeCategory;
+          const matchesQuery =
+            !q ||
+            item.name.toLowerCase().includes(q) ||
+            (item.description || "").toLowerCase().includes(q) ||
+            (item.category || "").toLowerCase().includes(q);
+          return matchesCat && matchesQuery;
+        });
+
+        productsEl.innerHTML = "";
+
+        if (!filtered.length) {
+          productsEl.innerHTML = `
+            <div class="empty-state">
+              Nenhum produto encontrado com o filtro ou busca atual.
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          const imgSrc = item.image || FALLBACK_IMAGE;
+
+          card.innerHTML = `
+            <div class="card-media">
+              <img src="${imgSrc}" alt="${item.name}" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <span class="category-tag">${item.category}</span>
+              <h3 class="card-title">${item.name}</h3>
+              <p class="card-desc">${item.description || "Peça exclusiva Andrade Boutique."}</p>
+              <div class="card-footer">
+                <span class="price">${formatBRL(item.price)}</span>
+                <button type="button" class="btn btn-primary" data-add-id="${item.id}">Adicionar</button>
+              </div>
+            </div>
+          `;
+
+          const imgEl = card.querySelector("img");
+          imgEl.addEventListener("error", () => {
+            imgEl.src = FALLBACK_IMAGE;
+          });
+
+          card.querySelector("[data-add-id]").addEventListener("click", () => {
+            addToCart(item.id);
+          });
+
+          productsEl.appendChild(card);
+        });
+      }
+
+      function addToCart(productId) {
+        const prod = products.find((p) => p.id === productId);
+        if (!prod) return;
+        cart[productId] = (cart[productId] || 0) + 1;
+        saveJson(STORAGE_KEYS.cart, cart);
+        renderCartBadge();
+      }
+
+      function changeCartQty(productId, delta) {
+        const nextQty = (cart[productId] || 0) + delta;
+        if (nextQty <= 0) {
+          delete cart[productId];
+        } else {
+          cart[productId] = nextQty;
+        }
+        saveJson(STORAGE_KEYS.cart, cart);
+        renderCartBadge();
+        renderCartModal();
+      }
+
+      function renderCartBadge() {
+        const totalItems = Object.values(cart).reduce((acc, qty) => acc + qty, 0);
+        cartCountEl.textContent = totalItems;
+      }
+
+      function renderCartModal() {
+        const entries = Object.entries(cart)
+          .map(([id, qty]) => {
+            const product = products.find((p) => p.id === id);
+            return product ? { product, qty } : null;
+          })
+          .filter(Boolean);
+
+        cartItemsEl.innerHTML = "";
+
+        if (!entries.length) {
+          cartItemsEl.innerHTML = `<p style="color: var(--muted); padding: 16px 0;">Sua sacola está vazia.</p>`;
+          cartTotalEl.textContent = formatBRL(0);
+          whatsappCheckoutBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent("Olá! Gostaria de conhecer as peças da Andrade Boutique.")}`;
+          return;
+        }
+
+        let total = 0;
+        const lines = ["Olá! Gostaria de fazer o seguinte pedido na *Andrade Boutique*:", ""];
+
+        entries.forEach(({ product, qty }) => {
+          const subtotal = product.price * qty;
+          total += subtotal;
+
+          const row = document.createElement("div");
+          row.className = "cart-item";
+          row.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img src="${product.image || FALLBACK_IMAGE}" alt="${product.name}" class="admin-thumb" />
+              <div>
+                <strong>${product.name}</strong>
+                <div style="font-size: 0.85rem; color: var(--muted);">
+                  ${formatBRL(product.price)} cada &middot; Subtotal: ${formatBRL(subtotal)}
+                </div>
+              </div>
+            </div>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn" aria-label="Diminuir quantidade">-</button>
+              <span>${qty}</span>
+              <button type="button" class="qty-btn" aria-label="Aumentar quantidade">+</button>
+            </div>
+          `;
+
+          const rowImg = row.querySelector("img");
+          rowImg.addEventListener("error", () => {
+            rowImg.src = FALLBACK_IMAGE;
+          });
+
+          const [decBtn, incBtn] = row.querySelectorAll(".qty-btn");
+          decBtn.addEventListener("click", () => changeCartQty(product.id, -1));
+          incBtn.addEventListener("click", () => changeCartQty(product.id, 1));
+          cartItemsEl.appendChild(row);
+
+          lines.push(`• ${qty}x ${product.name} — ${formatBRL(subtotal)}`);
+        });
+
+        lines.push("", `*Total: ${formatBRL(total)}*`);
+        cartTotalEl.textContent = formatBRL(total);
+        whatsappCheckoutBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(lines.join("\n"))}`;
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderProducts();
+      });
+
+      cartBtn.addEventListener("click", () => {
+        renderCartModal();
+        cartOverlay.classList.add("open");
+      });
+
+      closeCartBtn.addEventListener("click", () => cartOverlay.classList.remove("open"));
+      cartOverlay.addEventListener("click", (e) => {
+        if (e.target === cartOverlay) cartOverlay.classList.remove("open");
+      });
+
+      clearCartBtn.addEventListener("click", () => {
+        cart = {};
+        saveJson(STORAGE_KEYS.cart, cart);
+        renderCartBadge();
+        renderCartModal();
+      });
+
+      function updateAdminVisibility() {
+        adminLoginBox.style.display = isAdminAuthenticated ? "none" : "block";
+        adminPanelContent.style.display = isAdminAuthenticated ? "block" : "none";
+        if (isAdminAuthenticated) {
+          populateCategorySelect();
+          renderAdminCategories();
+          renderAdminProducts();
+          setPhotoPreview(currentPhotoData);
+        }
+      }
+
+      function populateCategorySelect() {
+        prodCategorySelect.innerHTML = "";
+        categories.forEach((cat) => {
+          const opt = document.createElement("option");
+          opt.value = cat;
+          opt.textContent = cat;
+          prodCategorySelect.appendChild(opt);
+        });
+      }
+
+      function resetProductForm() {
+        editingProductIdInput.value = "";
+        productForm.reset();
+        setPhotoPreview(FALLBACK_IMAGE);
+        saveProductBtn.textContent = "Salvar produto";
+        cancelEditBtn.style.display = "none";
+      }
+
+      function renderAdminCategories() {
+        adminCategoriesList.innerHTML = "";
+        categories.forEach((cat) => {
+          const row = document.createElement("div");
+          row.className = "admin-row";
+          const count = products.filter((p) => p.category === cat).length;
+          row.innerHTML = `
+            <div><strong>${cat}</strong> <span style="color: var(--muted);">(${count} produto(s))</span></div>
+            <button type="button" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.82rem;">Excluir</button>
+          `;
+          row.querySelector("button").addEventListener("click", async () => {
+            if (count > 0) {
+              alert(`Mova ou exclua os ${count} produto(s) da categoria "${cat}" antes de removê-la.`);
+              return;
+            }
+            categories = categories.filter((c) => c !== cat);
+            await deleteCategoryCloud(cat);
+            populateCategorySelect();
+            renderAdminCategories();
+            renderFilters();
+          });
+          adminCategoriesList.appendChild(row);
+        });
+      }
+
+      function renderAdminProducts() {
+        adminProductsList.innerHTML = "";
+        products.forEach((prod) => {
+          const row = document.createElement("div");
+          row.className = "admin-row";
+          row.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+              <img src="${prod.image || FALLBACK_IMAGE}" alt="${prod.name}" class="admin-thumb" />
+              <div>
+                <strong>${prod.name}</strong> &middot; ${formatBRL(prod.price)}
+                <div style="font-size: 0.82rem; color: var(--muted);">Categoria: ${prod.category}</div>
+              </div>
+            </div>
+            <div class="row-actions">
+              <button type="button" class="btn" style="padding: 6px 12px; font-size: 0.82rem;" data-edit>Editar</button>
+              <button type="button" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.82rem;" data-del>Excluir</button>
+            </div>
+          `;
+
+          const thumbEl = row.querySelector("img");
+          thumbEl.addEventListener("error", () => {
+            thumbEl.src = FALLBACK_IMAGE;
+          });
+
+          row.querySelector("[data-edit]").addEventListener("click", () => {
+            editingProductIdInput.value = prod.id;
+            prodNameInput.value = prod.name;
+            prodPriceInput.value = prod.price;
+            prodCategorySelect.value = prod.category;
+            prodDescInput.value = prod.description || "";
+            prodPhotoFileInput.value = "";
+            const imgVal = prod.image || FALLBACK_IMAGE;
+            prodPhotoUrlInput.value = imgVal.startsWith("http") ? imgVal : "";
+            setPhotoPreview(imgVal);
+            saveProductBtn.textContent = "Atualizar produto";
+            cancelEditBtn.style.display = "inline-block";
+          });
+
+          row.querySelector("[data-del]").addEventListener("click", async () => {
+            products = products.filter((p) => p.id !== prod.id);
+            delete cart[prod.id];
+            saveJson(STORAGE_KEYS.cart, cart);
+            await deleteProductCloud(prod.id);
+            renderAdminProducts();
+            renderAdminCategories();
+            renderProducts();
+            renderCartBadge();
+          });
+
+          adminProductsList.appendChild(row);
+        });
+      }
+
+      openAdminBtn.addEventListener("click", () => {
+        updateAdminVisibility();
+        adminOverlay.classList.add("open");
+      });
+
+      closeAdminBtn.addEventListener("click", () => adminOverlay.classList.remove("open"));
+      adminOverlay.addEventListener("click", (e) => {
+        if (e.target === adminOverlay) adminOverlay.classList.remove("open");
+      });
+
+      adminLoginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (adminPassInput.value.trim() === "andrade2026") {
+          isAdminAuthenticated = true;
+          adminPassInput.value = "";
+          updateAdminVisibility();
+        } else {
+          alert("Senha incorreta.");
+        }
+      });
+
+      logoutAdminBtn.addEventListener("click", () => {
+        isAdminAuthenticated = false;
+        resetProductForm();
+        updateAdminVisibility();
+      });
+
+      cancelEditBtn.addEventListener("click", resetProductForm);
+
+      productForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = prodNameInput.value.trim();
+        const price = parseFloat(prodPriceInput.value);
+        const category = prodCategorySelect.value;
+        const description = prodDescInput.value.trim();
+        const typedUrl = prodPhotoUrlInput.value.trim();
+        const imageSrc = typedUrl || currentPhotoData || FALLBACK_IMAGE;
+
+        if (!name || Number.isNaN(price) || price < 0 || !category) return;
+
+        const existingId = editingProductIdInput.value;
+        const savedRecord = existingId
+          ? { id: existingId, name, price, category, image: imageSrc, description }
+          : {
+              id: `${slugify(name) || "produto"}_${Date.now().toString(36)}`,
+              name,
+              price,
+              category,
+              image: imageSrc,
+              description
+            };
+
+        products = existingId
+          ? products.map((p) => (p.id === existingId ? savedRecord : p))
+          : [...products, savedRecord];
+
+        await upsertProductCloud(savedRecord);
+        resetProductForm();
+        renderAdminProducts();
+        renderAdminCategories();
+        renderProducts();
+      });
+
+      categoryForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const catName = newCategoryInput.value.trim();
+        if (!catName) return;
+        const exists = categories.some((c) => c.toLowerCase() === catName.toLowerCase());
+        if (exists) {
+          alert("Essa categoria já existe.");
+          return;
+        }
+        categories = [...categories, catName];
+        newCategoryInput.value = "";
+        await addCategoryCloud(catName);
+        populateCategorySelect();
+        renderAdminCategories();
+        renderFilters();
+      });
+
+      resetDemoDataBtn.addEventListener("click", async () => {
+        if (!confirm("Restaurar categorias e produtos padrão?")) return;
+        categories = structuredClone(DEFAULT_CATEGORIES);
+        products = structuredClone(DEFAULT_PRODUCTS);
+        activeCategory = "Todas";
+        saveJson(STORAGE_KEYS.categories, categories);
+        saveJson(STORAGE_KEYS.products, products);
+
+        if (hasSupabaseConfig) {
+          setSyncLabel("Sincronizando...");
+          try {
+            for (const c of categories) {
+              await sbRequest("categories?on_conflict=name", {
+                method: "POST",
+                prefer: "resolution=ignore-duplicates,return=representation",
+                body: JSON.stringify([{ name: c }])
+              });
+            }
+            await sbRequest("products?on_conflict=id", {
+              method: "POST",
+              body: JSON.stringify(products)
+            });
+            setSyncLabel("Nuvem ativa");
+          } catch (err) {
+            console.error(err);
+            setSyncLabel("Erro nuvem");
+          }
+        }
+
+        resetProductForm();
+        populateCategorySelect();
+        renderAdminCategories();
+        renderAdminProducts();
+        renderFilters();
+        renderProducts();
+      });
+
+      setPhotoPreview(FALLBACK_IMAGE);
+      renderFilters();
+      renderProducts();
+      renderCartBadge();
+      syncFromSupabase();
+    })();
+  </script>
+</body>
+</html>
